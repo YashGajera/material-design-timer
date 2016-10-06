@@ -76,9 +76,8 @@ function startTimer() {
         timerClock.text(returnFormattedToSeconds(timerTime));
 
         if (timerTime <= 0) {
-            if(localStorage.timerSounds == 'true'){
-                alarmSound.play();
-            }
+            alarmSound.play();
+            
 
             timerClock.text(returnFormattedToSeconds(0));
 
