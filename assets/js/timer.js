@@ -10,7 +10,15 @@ var timerTime = 0,          // Time set on the interval.
 var timerClock = $(".container.timer").find(".clock"),
     timerInput = $('#timer-input'),
     timerSoundsButton = $('#timer-sounds');
-	timerSoundsButton.prop('checked', true);
+
+timerClock.removeClass('inactive');
+var newTime = timerInput.val().trim();
+
+    if(newTime && newTime>=0) {
+        timerTime = newTime * 60;
+        localStorage.lastTimerTime = newTime;
+        timerClock.text(returnFormattedToSeconds(timerTime));
+    }
 
 // If there is a valid set time from last session, set it again.
 if(Number(localStorage.lastTimerTime)){
@@ -19,7 +27,6 @@ if(Number(localStorage.lastTimerTime)){
     timerClock.text(returnFormattedToSeconds(timerTime));
     timerInput.val(localStorage.lastTimerTime);
 }
-
 
 // When entering new time, the app will trim it and turn it into seconds (*60).
 timerInput.on('change', function () {
@@ -35,8 +42,9 @@ timerInput.on('change', function () {
 });
 
 $('.timer-btn.start').on('click',function(){
+    startTimer();
     if(timerTime>0) {
-        startTimer();
+        //startTimer();
     }
 });
 
@@ -77,7 +85,6 @@ function startTimer() {
 
         if (timerTime <= 0) {
             alarmSound.play();
-            
 
             timerClock.text(returnFormattedToSeconds(0));
 
